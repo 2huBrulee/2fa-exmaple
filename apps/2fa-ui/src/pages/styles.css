@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#__next {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #3730A3;
+}
+
+* {
+  color: white;
+}

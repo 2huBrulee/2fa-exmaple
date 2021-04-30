@@ -1,0 +1,155 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "2fa-api",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "projects": {
+    "2fa-api": {
+      "root": "apps/2fa-api",
+      "sourceRoot": "apps/2fa-api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/2fa-api",
+            "main": "apps/2fa-api/src/main.ts",
+            "tsConfig": "apps/2fa-api/tsconfig.app.json",
+            "assets": ["apps/2fa-api/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/2fa-api/src/environments/environment.ts",
+                  "with": "apps/2fa-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "2fa-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/2fa-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/2fa-api"],
+          "options": {
+            "jestConfig": "apps/2fa-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "simios2fa": {
+      "root": "libs/simios2fa",
+      "sourceRoot": "libs/simios2fa/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/simios2fa/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/simios2fa"],
+          "options": {
+            "jestConfig": "libs/simios2fa/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/simios2fa",
+            "tsConfig": "libs/simios2fa/tsconfig.lib.json",
+            "packageJson": "libs/simios2fa/package.json",
+            "main": "libs/simios2fa/src/index.ts",
+            "assets": ["libs/simios2fa/*.md"]
+          }
+        }
+      }
+    },
+    "2fa-ui": {
+      "root": "apps/2fa-ui",
+      "sourceRoot": "apps/2fa-ui",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/2fa-ui",
+            "outputPath": "dist/apps/2fa-ui"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "2fa-ui:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "2fa-ui:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "2fa-ui:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/2fa-ui"],
+          "options": {
+            "jestConfig": "apps/2fa-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/2fa-ui/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    }
+  }
+}
